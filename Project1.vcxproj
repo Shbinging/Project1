@@ -138,6 +138,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ui.cpp" />
+    <ClCompile Include="userAdmin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="diag.h" />
+    <ClInclude Include="ui.h" />
+    <ClInclude Include="userAdmin.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
