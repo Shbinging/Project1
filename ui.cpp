@@ -1,6 +1,6 @@
 #include"ui.h"
 #include"diag.h"
-
+#include"agori.h"
 void UI::cmdUi(){
 	//while (1){
 		printf("1.学生登录	2.学生注册	3.管理员登录\n");
@@ -39,6 +39,10 @@ void UI::adminLogIn()
 			adminPanel();
 		}
 	}
+}
+
+void UI::cls()
+{
 }
 
 void UI::adminPanel()
@@ -91,14 +95,39 @@ void UI::printCourse(CourseNode tmp){
 }
 void UI::admin_addCourse()
 {
+	string st = queBox<string>("输入课程具体信息:", 2);
+	vector<string> a = str_Split(st, ',');
+	CourseNode tmp = CourseNode(a[0], a[1], stoi(a[2]), stoi(a[3]), a[4]);
+	int state = admin.addCourse(tmp);//添加课程
+	if (state == 1){
+		printf("添加失败！课程已经在列表中!\n");
+	}
+	else{
+		printf("添加成功！\n");
+		viewAllCourse();
+	}
 }
 
 void UI::admin_delCourse()
 {
+	int tmp = queBox<int>("输入课程编号:", 2);
+	int tmp1 = admin.delCourse(tmp);
+	if (tmp1 == 0){
+		printf("删除成功！");
+		viewAllCourse();
+	}
+	else if (tmp1 == 1){
+		printf("课程删除失败！无此课程！");
+	}
+	else if (tmp1 == 2){
+		printf("课程删除失败，目前已有学生选此课！");
+	}
 }
 
 void UI::admin_editCourse()
 {
+	int tmp = queBox("请输入需要修改的id:", 1);
+
 }
 
 template<class returnType>

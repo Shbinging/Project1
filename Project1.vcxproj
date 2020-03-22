@@ -138,11 +138,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="databaseCurrentCourse.cpp" />
+    <ClCompile Include="databaseFileOpt.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ui.cpp" />
     <ClCompile Include="userAdmin.cpp" />
+    <ClCompile Include="agori.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="agori.h" />
+    <ClInclude Include="databaseCurrentCourse.h" />
+    <ClInclude Include="databaseFileOpt.h" />
     <ClInclude Include="diag.h" />
     <ClInclude Include="ui.h" />
     <ClInclude Include="userAdmin.h" />

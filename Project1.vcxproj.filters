@@ -24,6 +24,15 @@
     <ClCompile Include="userAdmin.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="databaseCurrentCourse.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="databaseFileOpt.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="agori.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ui.h">
@@ -33,6 +42,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="userAdmin.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="databaseCurrentCourse.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="databaseFileOpt.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="agori.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

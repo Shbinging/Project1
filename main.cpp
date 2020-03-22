@@ -1,9 +1,11 @@
 #include"ui.h"
 #include"diag.h"
-int CourseSum = 0;//这两个变量应该在baseCourse的文件中定义
-vector<CourseNode>CourseList;
+#include"userAdmin.h"
+#include"databaseCurrentCourse.h"
 int main(){
-	UI* a = new UI;
-	a->cmdUi();
+	UI b;
+	b.admin_addCourse();
+	b.admin_addCourse();
+	b.admin_delCourse();
 	return 0;
 }
