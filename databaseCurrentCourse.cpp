@@ -1,5 +1,5 @@
 #include "databaseCurrentCourse.h"
-
+#include"agori.h"
 
 bool databaseCurrentCourse::isFileExsist(string path){
 	ifstream fin(path);
@@ -21,10 +21,12 @@ int databaseCurrentCourse::readFromFile(string path)
 	}
 	int id, cap, sel;
 	string name, tea, type;
-	fin >> id >> name >> tea >> cap >> sel >> type;
 	while (!fin.eof()){
-		CourseList.push_back(CourseNode(name, tea, cap, sel, type, id));
 		fin >> id >> name >> tea >> cap >> sel >> type;
+		if (CourseList.empty())
+			CourseList.push_back(CourseNode(name, tea, cap, sel, type, id));
+		else if (CourseList.back().CourseId != id)
+			CourseList.push_back(CourseNode(name, tea, cap, sel, type, id));
 	}
 	fin.close();
 	writeToFile(pathBase);
@@ -40,7 +42,7 @@ bool databaseCurrentCourse::writeToFile(string path)
 	else{
 		For(i, 0, int(CourseList.size()) - 1){
 			CourseNode tmp = CourseList[i];
-			fout << tmp.CourseId << "\t" << tmp.CourseName << "\t" << tmp.CourseTeacher << "\t" << tmp.CourseCap << "\t" << tmp.CourseSel << "\t" << tmp.CourseType << endl;
+			fout << str_toStringId(tmp.CourseId) << "\t" << tmp.CourseName << "\t" << tmp.CourseTeacher << "\t" << tmp.CourseCap << "\t" << tmp.CourseSel << "\t" << tmp.CourseType << endl;
 		}
 		fout.close();
 		return 0;
@@ -68,8 +70,9 @@ void databaseCurrentCourse::editCourse(CourseNode tmp)
 {
 	For(i, 0, int(CourseList.size()) - 1){
 		if (CourseList[i].CourseId == tmp.CourseId){
-			if (tmp.CourseName != "") CourseList[i].CourseName = tmp.CourseName;
+			if (tmp.CourseName != "")CourseList[i].CourseName = tmp.CourseName;
 			if (tmp.CourseCap != -1) CourseList[i].CourseCap = tmp.CourseCap;
+			if (tmp.CourseSel != -1) CourseList[i].CourseSel = tmp.CourseSel;
 		}
 	}
 	writeToFile(pathBase);
@@ -101,3 +104,5 @@ databaseCurrentCourse::databaseCurrentCourse(){
 	if (CourseList.empty()) courseSum = 0;
 	else courseSum = CourseList[CourseList.size() - 1].CourseId;
 }
+
+databaseCurrentCourse dataCourse;

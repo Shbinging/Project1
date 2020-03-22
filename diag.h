@@ -14,7 +14,6 @@
 #define For(i, l, r) for(int i = l; i <= r; i++)
 using namespace std;
 
-
 struct CourseNode{
 	CourseNode(){
 		CourseId = 0;
@@ -61,4 +60,26 @@ struct stuWordNode{
 		stuPassword = password;
 	}
 	string stuName, stuPassword;
+};
+
+struct stuCourseNode{
+	stuCourseNode(int id, string st = "Null"){
+		courseId = id;
+		assistant = st;
+	}
+	int courseId;
+	string assistant;
+};
+
+struct assistNode{
+	assistNode(int id, string st){
+		courseId = id;
+		list.push_back(st);
+}
+	assistNode(int id){
+		courseId = id;
+		list.clear();
+	}
+	int courseId;
+	vector<string> list;
 };

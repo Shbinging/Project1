@@ -36,6 +36,9 @@
     <ClCompile Include="userStu.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="databaseStudentX.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ui.h">
@@ -57,6 +60,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="userStu.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="databaseStudentX.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

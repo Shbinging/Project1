@@ -21,3 +21,4 @@ private:
 	int courseSum;
 };
 
+extern databaseCurrentCourse dataCourse;

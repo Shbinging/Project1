@@ -17,3 +17,4 @@ public:
 	string pathBase;
 };
 
+extern databaseStudentAll dataStuAll;

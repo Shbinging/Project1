@@ -15,11 +15,15 @@ int databaseStudentAll::readFromFile(string path){
 	}
 	else{
 		string st;
-		fin >> st;
+		
 		while (!fin.eof()){
-			vector<string> a = str_Split(st, ',');
-			stuWordList.push_back(stuWordNode(a[0], a[1]));
 			fin >> st;
+			vector<string> a = str_Split(st, ',');
+			if (stuWordList.empty()) stuWordList.push_back(stuWordNode(a[0], a[1]));
+			else{
+				if (stuWordList.back().stuName != a[1])
+					stuWordList.push_back(stuWordNode(a[0], a[1]));
+			}
 		}
 		fin.close();
 		return 0;
@@ -67,3 +71,5 @@ void databaseStudentAll::addStuWord(stuWordNode tmp)
 	stuWordList.push_back(tmp);
 	writeToFile(pathBase);
 }
+
+databaseStudentAll dataStuAll;

@@ -93,6 +93,7 @@ void UI::adminPanel()
 
 void UI::stuPanel(string name)
 {
+	stu.setpath(name);
 	printf("1.注销登录 2.查看课程信息 3.选课 4.查看个人课表 5.退课 6.举手报名助教7.选择个人助教\n");
 	int tmp = queBox<int>("请选择所需的功能:", 1);
 	switch (tmp){
@@ -215,18 +216,38 @@ void UI::admin_editCourse()
 
 void UI::stu_addCourse()
 {
+	int id = queBox<int>("输入课程id:", 1);
+	int tmp = stu.addCourse(CourseNode(id));
+	if (tmp == 0) printf("已经添加到个人课表中!\n");
+	else if (tmp == 1)printf("添加失败！该课程已经在个人课表中!\n");
+	else if (tmp == 2) printf("添加失败！该课程已满!\n");
 }
 
 void UI::stu_viewAllCourse()
 {
+	vector<stuCourseNode>& a = stu.getStuCourseList();
+	printf("课程ID\t课程名称\t授课教师\t上限人数\t目前已选\t课程类型\n");
+	For(i, 0, int(a.size()) - 1){
+		int tmp = a[i].courseId;
+		CourseNode tmp1 = stu.getCourse(CourseNode(tmp));
+		printCourse(tmp1);
+	}
 }
 
 void UI::stu_delCourse()
 {
+	int id = queBox<int>("输入课程id:", 1);
+	int tmp = stu.delCourse(CourseNode(id));
+	if (tmp == 0){
+		printf("删除成功!\n");
+		viewAllCourse();
+	}
+	else printf("删除失败!该课程不在个人课表中!");
 }
 
 void UI::stu_addAssistant()
 {
+
 }
 
 void UI::stu_selAssistant()

@@ -13,8 +13,8 @@ public:
 	bool isCourseInList(CourseNode);
 	vector<CourseNode>& getCourseList();
 	CourseNode getCourse(CourseNode);
-private:
-	databaseCurrentCourse dataCourse;
+//private:
+	//databaseCurrentCourse dataCourse;
 };
 extern vector<CourseNode>CourseList;
 
