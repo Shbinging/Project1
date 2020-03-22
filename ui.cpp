@@ -180,5 +180,7 @@ void UI::admin_addCourseFromFile()
 {
 	string path = queBox<string>("请输入需要导入的文件名称:", 2);
 	int tmp = admin.addStuFromFile(path);
-	if (tmp == 0) cout << "导入成功！";
+	if (tmp == 0) printf("导入成功！\n");
+	else if (tmp == 1) printf("导入失败！文件无法打开！\n");
+	else if (tmp == 2) printf("导入失败！已有现成文件名单！\n");
 }

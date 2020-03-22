@@ -1,13 +1,56 @@
 #include "databaseCurrentCourse.h"
 
-void databaseCurrentCourse::uploadCourseList(string)
-{
+
+bool databaseCurrentCourse::isFileExsist(string path){
+	ifstream fin(path);
+	if (!fin.is_open()){
+		return 0;
+	}
+	else{
+		return 1;
+		fin.close();
+	}
 }
 
+int databaseCurrentCourse::readFromFile(string path)
+{
+	CourseList.clear();
+	ifstream fin(path);
+	if (!fin.is_open()){
+		return 1;
+	}
+	int id, cap, sel;
+	string name, tea, type;
+	fin >> id >> name >> tea >> cap >> sel >> type;
+	while (!fin.eof()){
+		CourseList.push_back(CourseNode(name, tea, cap, sel, type, id));
+		fin >> id >> name >> tea >> cap >> sel >> type;
+	}
+	fin.close();
+	writeToFile(pathBase);
+	return 0;
+}
+
+bool databaseCurrentCourse::writeToFile(string path)
+{
+	ofstream fout(path);
+	if (!fout.is_open()){
+		return 1;
+	}
+	else{
+		For(i, 0, int(CourseList.size()) - 1){
+			CourseNode tmp = CourseList[i];
+			fout << tmp.CourseId << "\t" << tmp.CourseName << "\t" << tmp.CourseTeacher << "\t" << tmp.CourseCap << "\t" << tmp.CourseSel << "\t" << tmp.CourseType << endl;
+		}
+		fout.close();
+		return 0;
+	}
+}
 void databaseCurrentCourse::addCourse(CourseNode tmp)
 {
 	tmp.CourseId = ++courseSum;
 	CourseList.push_back(tmp);
+	writeToFile(pathBase);
 }
 
 void databaseCurrentCourse::delCourse(CourseNode tmp)
@@ -18,6 +61,7 @@ void databaseCurrentCourse::delCourse(CourseNode tmp)
 			break;
 		}
 	}
+	writeToFile(pathBase);
 }
 
 void databaseCurrentCourse::editCourse(CourseNode tmp)
@@ -28,6 +72,7 @@ void databaseCurrentCourse::editCourse(CourseNode tmp)
 			if (tmp.CourseCap != -1) CourseList[i].CourseCap = tmp.CourseCap;
 		}
 	}
+	writeToFile(pathBase);
 }
 
 bool databaseCurrentCourse::isCourseInlist(CourseNode tmp)
@@ -51,8 +96,8 @@ CourseNode databaseCurrentCourse::getCourse(CourseNode tmp)
 }
 
 databaseCurrentCourse::databaseCurrentCourse(){
-	string path = "current_course.txt";
-	uploadCourseList(path);
+	pathBase = "current_course.txt";
+	readFromFile(pathBase);
 	if (CourseList.empty()) courseSum = 0;
 	else courseSum = CourseList[CourseList.size() - 1].CourseId;
 }

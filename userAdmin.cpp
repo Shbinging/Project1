@@ -6,9 +6,15 @@ bool userAdmin::checkPassword(string)
 	return false;
 }
 
-int userAdmin::addStuFromFile(string)
+int userAdmin::addStuFromFile(string path)
 {
-	return 0;
+	if (path == dataCourse.pathBase){
+		return dataCourse.readFromFile(path);
+	}
+	else{
+		if (dataCourse.isFileExsist(dataCourse.pathBase)) return 2;
+		else return dataCourse.readFromFile(path);
+	}
 }
 
 int userAdmin::addCourse(CourseNode tmp)

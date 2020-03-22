@@ -5,6 +5,7 @@
 #include<iostream>
 #include<vector>
 #include<cstdlib>
+#include<fstream>
 #define DEBUG
 #define testUi
 //#define DEBUG
@@ -39,8 +40,8 @@ struct CourseNode{
 		CourseType = -1;
 	}
 	// id name teacher cap sel type
-	CourseNode(string name, string teacher, int cap, int sel, string type){
-		CourseId = 0;
+	CourseNode(string name, string teacher, int cap, int sel, string type, int id = 0){
+		CourseId = id;
 		CourseName = name;
 		CourseTeacher = teacher;
 		CourseCap = cap;
