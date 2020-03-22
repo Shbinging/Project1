@@ -139,19 +139,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="databaseCurrentCourse.cpp" />
-    <ClCompile Include="databaseFileOpt.cpp" />
+    <ClCompile Include="databaseStudentAll.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ui.cpp" />
     <ClCompile Include="userAdmin.cpp" />
     <ClCompile Include="agori.cpp" />
+    <ClCompile Include="userStu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agori.h" />
     <ClInclude Include="databaseCurrentCourse.h" />
-    <ClInclude Include="databaseFileOpt.h" />
+    <ClInclude Include="databaseStudentAll.h" />
     <ClInclude Include="diag.h" />
     <ClInclude Include="ui.h" />
     <ClInclude Include="userAdmin.h" />
+    <ClInclude Include="userStu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

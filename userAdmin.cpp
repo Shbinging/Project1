@@ -1,9 +1,9 @@
 #include "userAdmin.h"
 
 
-bool userAdmin::checkPassword(string)
+bool userAdmin::checkPassword(string name, string password)
 {
-	return false;
+	return ((name == "Admin") && (password == "admin"));
 }
 
 int userAdmin::addStuFromFile(string path)

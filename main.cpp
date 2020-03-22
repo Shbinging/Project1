@@ -4,8 +4,6 @@
 #include"databaseCurrentCourse.h"
 int main(){
 	UI b;
-	b.viewAllCourse();
-	b.admin_addCourseFromFile();
-	b.viewAllCourse();
+	b.cmdUi();
 	return 0;
 }

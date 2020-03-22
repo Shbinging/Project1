@@ -23,22 +23,39 @@ void UI::cmdUi(){
 
 void UI::stuLogIn()
 {
+	string name = queBox<string>("输入学生ID:", 2);
+	string password = queBox<string>("输入学生密码:", 2);
+	if (stu.checkpassword(name, password)){
+		printf("*******登陆成功!*******\n");
+		stuPanel(name);
+	}
+	else printf("用户名或密码错误！");
+
 }
 
 void UI::stuReg()
 {
+	string name = queBox<string>("输入学生ID:", 2);
+	if (stu.isStuWordInList(stuWordNode(name))){
+		printf("此ID已经注册！\n");
+	}
+	else{
+		string password = queBox<string>("输入学生密码:", 2);
+		stu.addStuWord(name, password);
+		printf("*********注册成功,登录成功！*******\n");
+		stuPanel(name);
+	}
 }
 
 void UI::adminLogIn()
 {
 	string st = queBox<string>("输入管理员ID:", 2);
-	if (st == "Admin"){
-		string password = queBox<string>("输入管理员密码:", 2);
-		if (password == "admin"){
+	string password = queBox<string>("输入管理员密码:", 2);
+	if (admin.checkPassword(st, password)){
 			printf("*******登陆成功!*******\n");
 			adminPanel();
 		}
-	}
+	else printf("用户名或密码错误!\n");
 }
 
 void UI::cls()
@@ -70,6 +87,35 @@ void UI::adminPanel()
 		break;
 	case 7:
 		viewCourse();
+		break;
+	}
+}
+
+void UI::stuPanel(string name)
+{
+	printf("1.注销登录 2.查看课程信息 3.选课 4.查看个人课表 5.退课 6.举手报名助教7.选择个人助教\n");
+	int tmp = queBox<int>("请选择所需的功能:", 1);
+	switch (tmp){
+	case 1:
+		return;
+		break;
+	case 2:
+		viewAllCourse();
+		break;
+	case 3:
+		stu_addCourse();
+		break;
+	case 4:
+		stu_viewAllCourse();
+		break;
+	case 5:
+		stu_delCourse();
+		break;
+	case 6:
+		stu_addAssistant();
+		break;
+	case 7:
+		stu_selAssistant();
 		break;
 	}
 }
@@ -165,6 +211,26 @@ void UI::admin_editCourse()
 			}
 		}
 	}
+}
+
+void UI::stu_addCourse()
+{
+}
+
+void UI::stu_viewAllCourse()
+{
+}
+
+void UI::stu_delCourse()
+{
+}
+
+void UI::stu_addAssistant()
+{
+}
+
+void UI::stu_selAssistant()
+{
 }
 
 template<class returnType>

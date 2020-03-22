@@ -6,6 +6,7 @@
 #include<vector>
 #include<cstdlib>
 #include<fstream>
+
 #define DEBUG
 #define testUi
 //#define DEBUG
@@ -50,6 +51,14 @@ struct CourseNode{
 		else CourseType = 1;
 	}
 	int CourseId, CourseCap, CourseSel, CourseType;//0专业课 1非专业课
-	string CourseName, CourseTeacher; 
+	string CourseName, CourseTeacher;
 };
-extern vector<CourseNode>CourseList;
+//extern vector<CourseNode>CourseList;
+
+struct stuWordNode{
+	stuWordNode(string name, string password=""){
+		stuName = name;
+		stuPassword = password;
+	}
+	string stuName, stuPassword;
+};

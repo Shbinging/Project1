@@ -1,8 +1,6 @@
 #pragma once
 #include"diag.h"
-#include"databaseFileOpt.h"
-class databaseCurrentCourse :
-	public databaseFileOpt
+class databaseCurrentCourse
 {
 public:
 	databaseCurrentCourse();

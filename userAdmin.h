@@ -5,7 +5,7 @@
 class userAdmin
 {
 public:
-	bool checkPassword(string);
+	bool checkPassword(string, string);
 	int addStuFromFile(string);
 	int addCourse(CourseNode);
 	int delCourse(int);
