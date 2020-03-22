@@ -9,9 +9,10 @@ public:
 	int addStuFromFile(string);
 	int addCourse(CourseNode);
 	int delCourse(int);
+	int editCourse(CourseNode);
 	bool isCourseInList(CourseNode);
 	vector<CourseNode>& getCourseList();
-	CourseNode getCourse();
+	CourseNode getCourse(CourseNode);
 private:
 	databaseCurrentCourse dataCourse;
 };

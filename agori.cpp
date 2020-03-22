@@ -18,3 +18,15 @@ vector<string> str_Split(string st, char cha){
 	return a;
 }
 
+string str_toStringId(int tmp){
+	string id = to_string(tmp);
+	if (id.length() == 1) id = "00" + id;
+	else if (id.length() == 2) id = "0" + id;
+	return id;
+}
+bool str_isNum(string tmp){
+	For(i, 0, int(tmp.length()) - 1){
+		if (tmp[i] < '0' || tmp[i] > '9') return 0;
+	}
+	return 1;
+}

@@ -83,12 +83,22 @@ void UI::viewAllCourse()
 
 void UI::viewCourse()
 {
+	string st = queBox<string>("输入需要查看的课程ID或名称:", 2);
+	CourseNode curCourse;
+	if (str_isNum(st)) curCourse.CourseId = stoi(st);
+	else curCourse.CourseName = st;
+	if (!admin.isCourseInList(curCourse)){
+		printf("无此课程！");
+	}
+	else{
+		CourseNode tmp = admin.getCourse(curCourse);
+		printf("课程ID\t课程名称\t授课教师\t上限人数\t目前已选\t课程类型\n");
+		printCourse(tmp);
+	}
 }
 
 void UI::printCourse(CourseNode tmp){
-	string id = to_string(tmp.CourseId);
-	if (id.length() == 1) id = "00" + id;
-	else if (id.length() == 2) id = "0" + id;
+	string id = str_toStringId(tmp.CourseId);
 	cout << id << "\t" << tmp.CourseName << "\t" << tmp.CourseTeacher << "\t" << tmp.CourseCap << "\t" << tmp.CourseSel << "\t";
 	if (tmp.CourseType == 0) cout << "专业课" << endl;
 	else cout << "非专业课" << endl;
@@ -126,8 +136,35 @@ void UI::admin_delCourse()
 
 void UI::admin_editCourse()
 {
-	int tmp = queBox("请输入需要修改的id:", 1);
+	int id = queBox<int>("输入需要修改的id:", 1);
+	if (!admin.isCourseInList(CourseNode(id))){
+		printf("修改失败！无此课程！");
+	}
+	else{
+		int tmp = queBox<int>("输入需要修改的字段(1.任课教师  2.容纳人数): ", 1);
+		if (tmp == 1){
+			string st = queBox<string>("修改教师名称为:", 2);
 
+
+			CourseNode tmpCourse;
+			tmpCourse.CourseName = st;
+			tmpCourse.CourseId = id;
+			int tmp1 = admin.editCourse(tmpCourse);
+			if (!tmp1) printf("修改成功！\n");
+			else printf("修改失败！\n");
+		}
+		else{
+			if (tmp == 2){
+				int cap= queBox<int>("修改容纳人数为:", 1);
+				CourseNode tmpCourse;
+				tmpCourse.CourseCap = cap;
+				tmpCourse.CourseId = id;
+				int tmp1 = admin.editCourse(tmpCourse);
+				if (!tmp1) printf("修改成功！\n");
+				else printf("修改失败！因为修改后的人数小于目前已选人数\n");
+			}
+		}
+	}
 }
 
 template<class returnType>

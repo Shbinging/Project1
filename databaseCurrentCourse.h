@@ -9,6 +9,7 @@ public:
 	void uploadCourseList(string);
 	void addCourse(CourseNode);
 	void delCourse(CourseNode);
+	void editCourse(CourseNode);
 	bool isCourseInlist(CourseNode);
 	vector<CourseNode>& getCourseList();
 	CourseNode getCourse(CourseNode);

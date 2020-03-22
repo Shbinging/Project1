@@ -6,6 +6,7 @@ int main(){
 	UI b;
 	b.admin_addCourse();
 	b.admin_addCourse();
-	b.admin_delCourse();
+	//b.admin_editCourse();
+	b.viewCourse();
 	return 0;
 }

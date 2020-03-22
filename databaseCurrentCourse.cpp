@@ -20,6 +20,16 @@ void databaseCurrentCourse::delCourse(CourseNode tmp)
 	}
 }
 
+void databaseCurrentCourse::editCourse(CourseNode tmp)
+{
+	For(i, 0, int(CourseList.size()) - 1){
+		if (CourseList[i].CourseId == tmp.CourseId){
+			if (tmp.CourseName != "") CourseList[i].CourseName = tmp.CourseName;
+			if (tmp.CourseCap != -1) CourseList[i].CourseCap = tmp.CourseCap;
+		}
+	}
+}
+
 bool databaseCurrentCourse::isCourseInlist(CourseNode tmp)
 {
 	For(i, 0, int (CourseList.size()) - 1){
