@@ -10,7 +10,9 @@ bool userStu::checkpassword(string name, string password)
 
 void userStu::setpath(string path)
 {
-	dataStuX.setpath(path);
+	assistantSum = dataAssi.countAssistant(assistNode(path)); 
+	userName = path;
+	dataStuX.setpath(path+".txt");
 }
 
 bool userStu::isStuWordInList(stuWordNode tmp)
@@ -52,6 +54,49 @@ int userStu::delCourse(CourseNode tmp)
 		dataStuX.delStuCourse(stuCourseNode(tmp.CourseId));
 		return 0;
 	}
+}
+
+bool userStu::isCourseAssistExsist(assistNode tmp)
+{
+	return dataAssi.isCourseInAssistList(tmp);
+}
+
+int userStu::isCourseAssistHaveChosen(assistNode tmp)
+{
+	if (!dataStuX.isCourseInStuCourseList(CourseNode(tmp.courseId))) return 2;
+	stuCourseNode a = dataStuX.getStuCourse(stuCourseNode(tmp.courseId));
+	if (a.assistant == "Null") return 0;
+	else return 1;
+}
+
+int userStu::beAssistant(assistNode tmp)
+{
+	if (!dataCourse.isCourseInlist(CourseNode(tmp.courseId))) return 3;
+	if (assistantSum >= 2) return 2;
+	if (dataAssi.isStuInAssistList(tmp)) return 1;
+	assistantSum++;
+	dataAssi.addStuInAssistList(tmp);
+	return 0;
+}
+
+int userStu::addAssistant(assistNode& tmp, string st)
+{
+	if (st == userName) return 2;
+	bool f = 0;
+	For(i, 0, int(tmp.list.size()) - 1){
+		if (tmp.list[i] == st){
+			f = 1;
+			break;
+		}
+	}
+	if (!f) return 1;
+	dataStuX.addAssistant(assistNode(tmp.courseId, st));
+	return 0;
+}
+
+assistNode& userStu::getAssistNode(assistNode tmp)
+{
+	return dataAssi.getAssistNode(tmp);
 }
 
 CourseNode userStu::getCourse(CourseNode tmp)

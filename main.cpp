@@ -4,11 +4,12 @@
 #include"databaseCurrentCourse.h"
 #include"databaseStudentAll.h"
 #include"databaseStudentX.h"
-
-
-
+#include"databaseAssistant.h"
+#include"userStu.h"
 int main(){
 	UI b;
-	b.stuPanel("student1.txt");
+	b.cmdUi();
+	//databaseAssistant a;
+	//a.writeToFile("1.txt");
 	return 0;
 }

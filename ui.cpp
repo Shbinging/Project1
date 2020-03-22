@@ -170,14 +170,14 @@ void UI::admin_delCourse()
 	int tmp = queBox<int>("输入课程编号:", 2);
 	int tmp1 = admin.delCourse(tmp);
 	if (tmp1 == 0){
-		printf("删除成功！");
+		printf("删除成功!\n");
 		viewAllCourse();
 	}
 	else if (tmp1 == 1){
-		printf("课程删除失败！无此课程！");
+		printf("课程删除失败！无此课程!\n");
 	}
 	else if (tmp1 == 2){
-		printf("课程删除失败，目前已有学生选此课！");
+		printf("课程删除失败，目前已有学生选此课!\n");
 	}
 }
 
@@ -242,16 +242,53 @@ void UI::stu_delCourse()
 		printf("删除成功!\n");
 		viewAllCourse();
 	}
-	else printf("删除失败!该课程不在个人课表中!");
+	else printf("删除失败!该课程不在个人课表中!\n");
 }
 
-void UI::stu_addAssistant()
+void UI::printAssist(assistNode& tmp)
 {
-
+	printf("该课程助教有:");
+	cout << tmp.list[0];
+	For(i, 1, int(tmp.list.size()) - 1) cout << "," << tmp.list[i];
+	cout << endl;
 }
 
 void UI::stu_selAssistant()
 {
+	int id = queBox<int>("输入课程id:", 1);
+	int tmp2 = stu.isCourseAssistHaveChosen(assistNode(id, stu.userName));
+	if (tmp2 == 1) printf("该课程已经选过助教！");
+	else{
+		if (tmp2 == 2) printf("个人课表中无这门课！");
+		else{
+			int tmp = stu.isCourseAssistExsist(assistNode(id));
+			
+			if (!tmp) printf("该课程暂无助教!\n");
+			else{
+
+				assistNode& tmp1 = stu.getAssistNode(assistNode(id));
+
+				printAssist(tmp1);
+				string st = queBox<string>("输入助教名称:", 2);
+				int tmp2 = stu.addAssistant(tmp1, st);
+				if (tmp2 == 0){
+					printf("已选择该助教!\n");
+				}
+				if (tmp2 == 1) printf("无此助教!\n");
+				if (tmp2 == 2) printf("不可以选择自己作助教!\n");
+			}
+		}
+	}
+}
+
+void UI::stu_addAssistant()
+{
+	int id = queBox<int>("输入课程id:", 1);
+	int tmp = stu.beAssistant(assistNode(id, stu.userName));
+	if (tmp == 0) printf("报名成功!\n");
+	if (tmp == 1) printf("报名失败，重复报名！\n");
+	if (tmp == 2) printf("报名失败，已经有两门课程当助教!\n");
+	if (tmp == 3) printf("报名失败，无此课程!");
 }
 
 template<class returnType>

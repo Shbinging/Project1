@@ -22,6 +22,7 @@ public:
 	void stu_addCourse();
 	void stu_viewAllCourse();
 	void stu_delCourse();
+	void printAssist(assistNode& tmp);
 	void stu_addAssistant();
 	void stu_selAssistant();
 	template<class returnType>

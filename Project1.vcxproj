@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="databaseAssistant.cpp" />
     <ClCompile Include="databaseCurrentCourse.cpp" />
     <ClCompile Include="databaseStudentAll.cpp" />
     <ClCompile Include="databaseStudentX.cpp" />
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agori.h" />
+    <ClInclude Include="databaseAssistant.h" />
     <ClInclude Include="databaseCurrentCourse.h" />
     <ClInclude Include="databaseStudentAll.h" />
     <ClInclude Include="databaseStudentX.h" />

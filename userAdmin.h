@@ -1,7 +1,7 @@
 #pragma once
 #include"diag.h"
 #include"databaseCurrentCourse.h"
-
+#include"databaseAssistant.h"
 class userAdmin
 {
 public:

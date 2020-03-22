@@ -3,6 +3,7 @@
 #include"databaseStudentAll.h"
 #include"databaseStudentX.h"
 #include"databaseCurrentCourse.h"
+#include"databaseAssistant.h"
 class userStu
 {
 public:
@@ -14,8 +15,17 @@ public:
 	vector<stuCourseNode>& getStuCourseList();
 	int addCourse(CourseNode);
 	int delCourse(CourseNode);
+
+	bool isCourseAssistExsist(assistNode);
+	int isCourseAssistHaveChosen(assistNode);
+	int beAssistant(assistNode);//要求自己当助教
+	int addAssistant(assistNode& tmp, string st);//申请别人当自己的助教
+	assistNode& getAssistNode(assistNode);
 	CourseNode getCourse(CourseNode tmp);
+	string userName;
+
 private:
+	int assistantSum;
 
 };
 

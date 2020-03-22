@@ -30,6 +30,7 @@ int userAdmin::delCourse(int id)
 		CourseNode tmp = dataCourse.getCourse(CourseNode(id));
 		if (tmp.CourseSel != 0) return 2;
 		else{
+			dataAssi.delCourseInAssistList(assistNode(id));
 			dataCourse.delCourse(CourseNode(id));
 			return 0;
 		}

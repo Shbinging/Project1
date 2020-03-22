@@ -72,13 +72,29 @@ struct stuCourseNode{
 };
 
 struct assistNode{
+	assistNode(){
+		courseId = 0;
+		if (!list.empty()) list.clear();
+	}
 	assistNode(int id, string st){
 		courseId = id;
+		if (!list.empty()) list.clear();
 		list.push_back(st);
 }
+	assistNode(string st){
+		courseId = 0;
+		if (!list.empty()) list.clear();
+		list.push_back(st);
+	}
 	assistNode(int id){
 		courseId = id;
-		list.clear();
+		if (!list.empty()) list.clear();
+	}
+	assistNode(const assistNode& tmp){
+		courseId = tmp.courseId;
+		For(i, 0, int(tmp.list.size()) - 1){
+			list.push_back(tmp.list[i]);
+		}
 	}
 	int courseId;
 	vector<string> list;
