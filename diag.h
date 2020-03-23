@@ -7,6 +7,7 @@
 #include<cstdlib>
 #include<fstream>
 #include <utility>
+#include<algorithm>
 
 #define DEBUG
 #define testUi

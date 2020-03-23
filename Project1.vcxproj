@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ADEQ.cpp" />
     <ClCompile Include="databaseAssistant.cpp" />
     <ClCompile Include="databaseCourseAll.cpp" />
     <ClCompile Include="databaseCurrentCourse.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="userStu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ADEQ.h" />
     <ClInclude Include="agori.h" />
     <ClInclude Include="databaseAssistant.h" />
     <ClInclude Include="databaseCourseAll.h" />

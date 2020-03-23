@@ -85,12 +85,14 @@ void databaseStudentX::addAssistant(assistNode tmp)
 	writeToFile(pathBase);
 }
 
+/*
 bool databaseStudentX::isCourseAssistantFull(stuCourseNode tmp)
 {
 	For(i, 0, int(stuCourseList.size()) - 1){
 		if (tmp.courseId == stuCourseList[i].courseId) return (!(stuCourseList[i].assistant == "Null"));
 	}
 }
+*/
 
 void databaseStudentX::setpath(string st){
 	stuCourseList.clear();

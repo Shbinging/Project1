@@ -39,6 +39,7 @@ int userStu::addCourse(CourseNode tmp)
 		tmp1.CourseSel++;
 		dataCourse.editCourse(tmp1);
 		dataStuX.addStuCourse(stuCourseNode(tmp.CourseId));
+		dataCourseStu.addStuInCourseX(tmp.CourseId, userName);
 		return 0;
 	}
 
@@ -52,6 +53,8 @@ int userStu::delCourse(CourseNode tmp)
 		tmp1.CourseSel--;
 		dataCourse.editCourse(tmp1);
 		dataStuX.delStuCourse(stuCourseNode(tmp.CourseId));
+		dataCourseStu.delStuInCourseX(tmp.CourseId, userName);
+		//删除助教名单中该学生！
 		return 0;
 	}
 }
@@ -72,9 +75,8 @@ int userStu::isCourseAssistHaveChosen(assistNode tmp)
 int userStu::beAssistant(assistNode tmp)
 {
 	if (!dataCourse.isCourseInlist(CourseNode(tmp.courseId))) return 3;
-	if (assistantSum >= 2) return 2;
+	if (dataAssi.countAssistant(tmp) >= 2) return 2;
 	if (dataAssi.isStuInAssistList(tmp)) return 1;
-	assistantSum++;
 	dataAssi.addStuInAssistList(tmp);
 	return 0;
 }
@@ -82,14 +84,7 @@ int userStu::beAssistant(assistNode tmp)
 int userStu::addAssistant(assistNode& tmp, string st)
 {
 	if (st == userName) return 2;
-	bool f = 0;
-	For(i, 0, int(tmp.list.size()) - 1){
-		if (tmp.list[i] == st){
-			f = 1;
-			break;
-		}
-	}
-	if (!f) return 1;
+	if (!dataAssi.isStuInAssistList(assistNode(tmp.courseId, st))) return 1;
 	dataStuX.addAssistant(assistNode(tmp.courseId, st));
 	return 0;
 }
