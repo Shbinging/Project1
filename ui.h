@@ -15,6 +15,7 @@ public:
 	void viewAllCourse();
 	void admin_addCourseFromFile();
 	void viewCourse();
+	void viewStu();
 	void printCourse(CourseNode tmp);
 	void admin_addCourse();
 	void admin_delCourse();

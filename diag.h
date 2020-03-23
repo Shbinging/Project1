@@ -6,6 +6,7 @@
 #include<vector>
 #include<cstdlib>
 #include<fstream>
+#include <utility>
 
 #define DEBUG
 #define testUi
@@ -92,9 +93,29 @@ struct assistNode{
 	}
 	assistNode(const assistNode& tmp){
 		courseId = tmp.courseId;
-		For(i, 0, int(tmp.list.size()) - 1){
-			list.push_back(tmp.list[i]);
-		}
+		list.assign(tmp.list.begin(), tmp.list.end());
+	}
+	int courseId;
+	vector<string> list;
+};
+
+struct courseStuNode{
+	courseStuNode(){
+		courseId = -1;
+		list.clear();
+	}
+	courseStuNode(int id){
+		list.clear();
+		courseId = id;
+	}
+	courseStuNode(int id, string st){
+		courseId = id;
+		list.clear();
+		list.push_back(st);
+	}
+	courseStuNode(const courseStuNode& tmp){
+		courseId = tmp.courseId;
+		list.assign(tmp.list.begin(), tmp.list.end());
 	}
 	int courseId;
 	vector<string> list;

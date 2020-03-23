@@ -42,6 +42,9 @@
     <ClCompile Include="databaseAssistant.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="databaseCourseAll.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ui.h">
@@ -69,6 +72,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="databaseAssistant.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="databaseCourseAll.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

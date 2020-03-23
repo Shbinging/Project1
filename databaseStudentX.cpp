@@ -93,6 +93,7 @@ bool databaseStudentX::isCourseAssistantFull(stuCourseNode tmp)
 }
 
 void databaseStudentX::setpath(string st){
+	stuCourseList.clear();
 	pathBase = st;
 	readFromFile(pathBase);
 }

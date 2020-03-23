@@ -5,11 +5,10 @@
 #include"databaseStudentAll.h"
 #include"databaseStudentX.h"
 #include"databaseAssistant.h"
+#include"databaseCourseAll.h"
 #include"userStu.h"
 int main(){
 	UI b;
-	b.cmdUi();
-	//databaseAssistant a;
-	//a.writeToFile("1.txt");
+	
 	return 0;
 }
