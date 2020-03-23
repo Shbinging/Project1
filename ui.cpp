@@ -141,6 +141,31 @@ void UI::viewCourse()
 		CourseNode tmp = admin.getCourse(curCourse);
 		printf("课程ID\t课程名称\t授课教师\t上限人数\t目前已选\t课程类型\n");
 		printCourse(tmp);
+		printf("还希望进行以下哪项操作: 1.查看选课学生名单 2.查看课程报名助教名单");
+		int opt = queBox<int>("输入操作编号:", 1);
+		if (opt == 1){
+			viewStu(curCourse.CourseId);
+		}
+		else if (opt == 2){
+			printAssist(curCourse.CourseId);
+		}
+		else printf("无效操作！\n");
+	}
+}
+
+void UI::viewStu(int courseId)
+{
+	courseStuNode& a = admin.getCourseStuList(courseId);
+	if (a.list.empty()) printf("此课程暂无学生选择!");
+	else{
+		printf("选择该课程的学生有:");
+		cout << a.list[0];
+		For(i, 1, int(a.list.size()) - 1){
+			cout << "," << a.list[i];
+		}
+		cout << endl;
+		CourseNode curCourse = dataCourse.getCourse(CourseNode(courseId));
+		printf("共计%d名学生，距离满课还差%d人\n", curCourse.CourseSel, curCourse.CourseCap - curCourse.CourseSel);
 	}
 }
 
@@ -253,6 +278,18 @@ void UI::printAssist(assistNode& tmp)
 	cout << endl;
 }
 
+bool UI::printAssist(int id){
+	int tmp = stu.isCourseAssistExsist(assistNode(id));
+	if (!tmp){
+		printf("该课程暂无助教!\n");
+		return 1;
+	}
+	else{
+		assistNode& tmp1 = stu.getAssistNode(assistNode(id));
+		printAssist(tmp1);
+		return 0;
+	}
+}
 void UI::stu_selAssistant()
 {
 	int id = queBox<int>("输入课程id:", 1);
@@ -261,16 +298,10 @@ void UI::stu_selAssistant()
 	else{
 		if (tmp2 == 2) printf("个人课表中无这门课！");
 		else{
-			int tmp = stu.isCourseAssistExsist(assistNode(id));
-			
-			if (!tmp) printf("该课程暂无助教!\n");
+			if (printAssist(id));
 			else{
-
-				assistNode& tmp1 = stu.getAssistNode(assistNode(id));
-
-				printAssist(tmp1);
 				string st = queBox<string>("输入助教名称:", 2);
-				int tmp2 = stu.addAssistant(tmp1, st);
+				int tmp2 = stu.addAssistant(stu.getAssistNode(assistNode(id)), st);
 				if (tmp2 == 0){
 					printf("已选择该助教!\n");
 				}

@@ -15,7 +15,7 @@ public:
 	void viewAllCourse();
 	void admin_addCourseFromFile();
 	void viewCourse();
-	void viewStu();
+	void viewStu(int Courseid);
 	void printCourse(CourseNode tmp);
 	void admin_addCourse();
 	void admin_delCourse();
@@ -25,6 +25,7 @@ public:
 	void stu_delCourse();
 	void printAssist(assistNode& tmp);
 	void stu_addAssistant();
+	bool printAssist(int id);
 	void stu_selAssistant();
 	template<class returnType>
 	returnType queBox(string st, int opt);//1 int 2 string

@@ -5,7 +5,8 @@
 class databaseAssistant
 {
 public:
-	databaseAssistant();
+	databaseAssistant();//初始化助教文件
+
 	int countAssistant(assistNode tmp);
 	bool isStuInAssistList(assistNode tmp);
 	void addStuInAssistList(assistNode tmp);

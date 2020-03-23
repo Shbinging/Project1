@@ -4,27 +4,31 @@
 databaseCourseAll::databaseCourseAll()
 {
 	courseStuList.clear();
+}
+
+void databaseCourseAll::init()
+{
 	vector<CourseNode>& courseIdList = dataCourse.getCourseList();
 	int n = int(courseIdList.size()) - 1;
 	For(i, 0, n) addCourseXInGraph(courseIdList[i].CourseId);
 	vector<stuWordNode>& stuNameList = dataStuAll.getStuWordList();
 	For(i, 0, int(stuNameList.size()) - 1){
-		dataStuX.setpath(stuNameList[i].stuName);
+		dataStuX.setpath(stuNameList[i].stuName + ".txt");
 		vector<stuCourseNode>& stuCourseList = dataStuX.getStuCourseList();
 		For(j, 0, int(stuCourseList.size()) - 1){
 			addStuInCourseX(stuCourseList[j].courseId, stuNameList[i].stuName);
 		}
 	}
+	/*For(i, 0, len() - 1){
+		if (!courseStuList[i].list.empty())
+			cout << courseStuList[i].courseId << " " << courseStuList[i].list[0] <<endl;
+	}*/
 }
-
 void databaseCourseAll::addStuInCourseX(int id, string name)
 {
 	int n = len();
-	For(i, 0, n - 1){
-		if (courseStuList[i].courseId == id){
-			courseStuList[i].list.push_back(name);
-		}
-	}
+	int loc = findCourseXInGraph(id);
+	courseStuList[loc].list.push_back(name);
 }
 
 int databaseCourseAll::len(){
@@ -56,10 +60,11 @@ void databaseCourseAll::delStuInCourseX(int id, string name)
 	courseStuList[loc.first].list.erase(courseStuList[loc.first].list.begin() + loc.second);
 }
 
-const courseStuNode& databaseCourseAll::getListInCourseX(int id)
+courseStuNode& databaseCourseAll::getListInCourseX(int id)
 {
 	int loc = findCourseXInGraph(id);
-	return courseStuList[loc];
+	courseStuListNode = courseStuList[loc];
+	return courseStuListNode;
 }
 
 void databaseCourseAll::addCourseXInGraph(int id)

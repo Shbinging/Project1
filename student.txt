@@ -1,4 +1,3 @@
 student1,passwordstudent1
-student,stu
 student2,passwordstudent2
-add,12345
+student3,passwordstudent3

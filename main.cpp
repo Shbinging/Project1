@@ -9,6 +9,7 @@
 #include"userStu.h"
 int main(){
 	UI b;
-	
+	//dataCourseStu.init();
+	b.viewCourse();
 	return 0;
 }

@@ -60,6 +60,11 @@ bool userAdmin::isCourseInList(CourseNode tmp)
 	return dataCourse.isCourseInlist(tmp);
 }
 
+courseStuNode& userAdmin::getCourseStuList(int id)
+{
+	return dataCourseStu.getListInCourseX(id);
+}
+
 vector<CourseNode>& userAdmin::getCourseList()
 {
 #ifdef testUi
@@ -71,4 +76,11 @@ vector<CourseNode>& userAdmin::getCourseList()
 CourseNode userAdmin::getCourse(CourseNode tmp)
 {
 	return dataCourse.getCourse(tmp);
+}
+
+assistNode userAdmin::getAssistNode(int courseId)
+{
+	if (dataAssi.isCourseInAssistList(assistNode(courseId)))
+		return dataAssi.getAssistNode(assistNode(courseId));
+	else return assistNode();
 }

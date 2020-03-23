@@ -17,7 +17,7 @@ using namespace std;
 
 struct CourseNode{
 	CourseNode(){
-		CourseId = 0;
+		CourseId = -1;
 		CourseName = "";
 		CourseTeacher = "";
 		CourseCap = -1;
@@ -34,14 +34,14 @@ struct CourseNode{
 	}
 	CourseNode(string name){
 		CourseName = name;
-		CourseId = 0;
+		CourseId = -1;
 		CourseTeacher = "";
 		CourseCap = -1;
 		CourseSel = -1;
 		CourseType = -1;
 	}
 	// id name teacher cap sel type
-	CourseNode(string name, string teacher, int cap, int sel, string type, int id = 0){
+	CourseNode(string name, string teacher, int cap, int sel, string type, int id = -1){
 		CourseId = id;
 		CourseName = name;
 		CourseTeacher = teacher;
@@ -74,7 +74,7 @@ struct stuCourseNode{
 
 struct assistNode{
 	assistNode(){
-		courseId = 0;
+		courseId = -1;
 		if (!list.empty()) list.clear();
 	}
 	assistNode(int id, string st){
@@ -83,7 +83,7 @@ struct assistNode{
 		list.push_back(st);
 }
 	assistNode(string st){
-		courseId = 0;
+		courseId = -1;
 		if (!list.empty()) list.clear();
 		list.push_back(st);
 	}
