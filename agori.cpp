@@ -30,3 +30,10 @@ bool str_isNum(string tmp){
 	}
 	return 1;
 }
+
+int atoi(string st){
+	int s = 0;
+	For(i, 0, int(st.length()) - 1)
+		s = s * 10 + st[i] - '0';
+	return s;
+}

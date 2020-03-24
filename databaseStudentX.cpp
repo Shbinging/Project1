@@ -1,22 +1,25 @@
 #include "databaseStudentX.h"
 #include"diag.h"
 #include"agori.h"
-int databaseStudentX::readFromFile(string path)
+#include"ADEQ.h"
+int databaseStudentX::readFromFile()
 {
-	stuCourseList.clear();
-	ifstream fin(path);
+	pStuCourse.clear();
+	ifstream fin(pathBase);
 	if (!fin.is_open()){
 		return 1;
 	}
 	else{
 		int id;
 		string st;
+		fin >> id >> st;
 		while (!fin.eof()){
-			fin >> id >> st;
-			if (!stuCourseList.empty()){
-				if (stuCourseList.back().courseId != id) stuCourseList.push_back(stuCourseNode(id, st));
+			string stId = to_string(id);
+			if (!pStuCourse.queryHasKey(stId)){
+				pStuCourse.addKey(stId);
+				pStuCourse.add(stId, 1, st);
 			}
-			else stuCourseList.push_back(stuCourseNode(id, st));
+			fin >> id >> st;
 		}
 		fin.close();
 		return 0;
@@ -24,22 +27,21 @@ int databaseStudentX::readFromFile(string path)
 
 }
 
-bool databaseStudentX::writeToFile(string path)
+bool databaseStudentX::writeToFile()
 {
-	ofstream fout(path);
+	ofstream fout(pathBase);
 	if (!fout.is_open()){
 		return 1;
 	}
 	else{
-		For(i, 0, int(stuCourseList.size()) - 1){
-			stuCourseNode tmp = stuCourseList[i];
-			fout << str_toStringId(tmp.courseId) << "\t" << tmp.assistant << endl;
+		For(i, 0, int(pStuCourse.graph.size()) - 1){
+			fout << str_toStringId(atoi(pStuCourse.graph[i][0][0])) << "\t" << pStuCourse.graph[i][1][0] << endl;
 		}
 		fout.close();
 		return 0;
 	}
 }
-
+/*
 vector<stuCourseNode>& databaseStudentX::getStuCourseList()
 {
 	return stuCourseList;
@@ -95,9 +97,8 @@ bool databaseStudentX::isCourseAssistantFull(stuCourseNode tmp)
 */
 
 void databaseStudentX::setpath(string st){
-	stuCourseList.clear();
 	pathBase = st;
-	readFromFile(pathBase);
+	readFromFile();
 }
 
 databaseStudentX dataStuX;

@@ -10,6 +10,10 @@
 int main(){
 	UI b;
 	//dataCourseStu.init();
-	b.viewCourse();
+	dataCourse.readFromFile();
+	dataStuAll.readFromFile();
+	dataAssi.readFromFile();
+	dataCourseStu.init();
+	b.cmdUi();
 	return 0;
 }

@@ -1,8 +1,8 @@
 #include "databaseAssistant.h"
 #include"agori.h"
+#include"ADEQ.h"
 int databaseAssistant::readFromFile(string path)
 {
-	assistList.clear();
 	ifstream fin(path);
 	if (!fin.is_open()){
 		return 1;
@@ -10,16 +10,12 @@ int databaseAssistant::readFromFile(string path)
 	else{
 		int id;
 		string st;
+		fin >> id >> st;
 		while (!fin.eof()){
-			fin >> id >> st;
 			vector<string> a = str_Split(st, ',');
-			assistNode tmp = assistNode(id);
-			For(i, 0, int(a.size()) - 1){
-				tmp.list.push_back(a[i]);
-			}
-			if (assistList.empty()) assistList.push_back(tmp);
-			else if (assistList.back().courseId != id)
-				assistList.push_back(tmp);
+			string stId = to_string(id);
+			if (pCourse.graph[pCourse.findKey(stId)][7].empty()) pCourse.add(stId, 7, a);
+			fin >> id >> st;
 		}
 		fin.close();
 		return 0;
@@ -33,19 +29,23 @@ bool databaseAssistant::writeToFile(string path)
 		return 1;
 	}
 	else{
-		For(i, 0, int(assistList.size()) - 1){
-			assistNode& tmp = assistList[i];
-			fout << str_toStringId(tmp.courseId) << "\t";
-			fout << tmp.list[0];
-			For(i, 1, int(tmp.list.size()) - 1)
-				fout << "," << tmp.list[i];
-			fout << endl;
+		For(i, 0, int(pCourse.graph.size()) - 1){
+			if (!pCourse.graph[i][7].empty()){
+				fout << str_toStringId(atoi(pCourse.graph[i][0][0])) << "\t";
+				vector<string>& a = pCourse.query(pCourse.graph[i][0][0], 7);
+				fout << a[0];
+				For(j, 1, int(a.size()) - 1)
+					fout << "," << a[j];
+				fout << endl;
+			}
 		}
 		fout.close();
 		return 0;
 	}
 }
 
+databaseAssistant dataAssi;
+/*
 bool databaseAssistant::isCourseInAssistList(assistNode tmp)
 {
 	For(i, 0, int(assistList.size()) - 1){
@@ -125,5 +125,4 @@ void databaseAssistant::delCourseInAssistList(assistNode tmp){
 	}
 	writeToFile(pathBase);
 }
-
-databaseAssistant dataAssi;
+*/

@@ -8,7 +8,7 @@
 #include<fstream>
 #include <utility>
 #include<algorithm>
-
+#include<Windows.h>
 #define DEBUG
 #define testUi
 //#define DEBUG
@@ -83,6 +83,11 @@ struct assistNode{
 		if (!list.empty()) list.clear();
 		list.push_back(st);
 }
+	assistNode(int id, vector<string> a){
+		courseId = id;
+		if (!list.empty()) list.clear();
+		list.assign(a.begin(), a.end());
+	}
 	assistNode(string st){
 		courseId = -1;
 		if (!list.empty()) list.clear();
@@ -113,6 +118,11 @@ struct courseStuNode{
 		courseId = id;
 		list.clear();
 		list.push_back(st);
+	}
+	courseStuNode(int id, vector<string> a){
+		courseId = id;
+		list.clear();
+		list.assign(a.begin(), a.end());
 	}
 	courseStuNode(const courseStuNode& tmp){
 		courseId = tmp.courseId;

@@ -1,3 +1,0 @@
-001	student2
-003	Null
-008	student3

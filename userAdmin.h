@@ -3,6 +3,8 @@
 #include"databaseCurrentCourse.h"
 #include"databaseAssistant.h"
 #include"databaseCourseAll.h"
+#include"ADEQ.h"
+#include"agori.h"
 class userAdmin
 {
 public:
@@ -15,8 +17,8 @@ public:
 	int delCourse(int);
 	int editCourse(CourseNode);
 	bool isCourseInList(CourseNode);
-	courseStuNode& getCourseStuList(int id);
-	vector<CourseNode>& getCourseList();
+	courseStuNode getCourseStuList(int id);
+	vector<string>& getCourseList();//这个要改！！！
 	CourseNode getCourse(CourseNode);
 	assistNode getAssistNode(int courseId);
 //private:

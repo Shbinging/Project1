@@ -1,29 +1,28 @@
 #include "databaseStudentAll.h"
 #include"diag.h"
+#include"ADEQ.h"
 #include"agori.h"
 databaseStudentAll::databaseStudentAll(){
 	pathBase = "student.txt";
-	readFromFile(pathBase);
-	
 }
 
 int databaseStudentAll::readFromFile(string path){
-	stuWordList.clear();
 	ifstream fin(path);
 	if (!fin.is_open()){
 		return 1;
 	}
 	else{
 		string st;
-		
+		fin >> st;
 		while (!fin.eof()){
-			fin >> st;
+			
 			vector<string> a = str_Split(st, ',');
-			if (stuWordList.empty()) stuWordList.push_back(stuWordNode(a[0], a[1]));
-			else{
-				if (stuWordList.back().stuName != a[1])
-					stuWordList.push_back(stuWordNode(a[0], a[1]));
+			if (!pStuPass.queryHasKey(a[0])){
+				pStuPass.addKey(a[0]);
+				
+				pStuPass.add(a[0], 1, a[1]);
 			}
+			fin >> st;
 		}
 		fin.close();
 		return 0;
@@ -37,15 +36,14 @@ bool databaseStudentAll::writeToFile(string path)
 		return 1;
 	}
 	else{
-		For(i, 0, int(stuWordList.size()) - 1){
-			stuWordNode tmp = stuWordList[i];
-			fout << tmp.stuName << "," << tmp.stuPassword << endl;
+		For(i, 0, int(pStuPass.graph.size()) - 1){
+			fout << pStuPass.graph[i][0][0] << "," << pStuPass.graph[i][1][0] << endl;
 		}
 		fout.close();
 		return 0;
 	}
 }
-
+/*
 vector<stuWordNode>& databaseStudentAll::getStuWordList()
 {
 	return stuWordList;
@@ -71,5 +69,5 @@ void databaseStudentAll::addStuWord(stuWordNode tmp)
 	stuWordList.push_back(tmp);
 	writeToFile(pathBase);
 }
-
+*/
 databaseStudentAll dataStuAll;

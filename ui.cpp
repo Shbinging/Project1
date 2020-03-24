@@ -1,9 +1,10 @@
 #include"ui.h"
 #include"diag.h"
 #include"agori.h"
+#include<conio.h>
 void UI::cmdUi(){
-	//while (1){
-		printf("1.学生登录	2.学生注册	3.管理员登录\n");
+	while (1){
+		printf("1.学生登录	2.学生注册	3.管理员登录		4.关闭\n");
 		printf("输入操作:");
 
 		int opt;
@@ -17,8 +18,11 @@ void UI::cmdUi(){
 			break;
 		case 3:
 			adminLogIn();
+		case 4:
+			return;
 		}
-	//}
+		wait();
+	}
 }
 
 void UI::stuLogIn()
@@ -27,9 +31,12 @@ void UI::stuLogIn()
 	string password = queBox<string>("输入学生密码:", 2);
 	if (stu.checkpassword(name, password)){
 		printf("*******登陆成功!*******\n");
+		wait();
 		stuPanel(name);
 	}
-	else printf("用户名或密码错误！");
+	else printf("用户名或密码错误！\n");
+	wait();
+	cmdUi();
 
 }
 
@@ -38,11 +45,14 @@ void UI::stuReg()
 	string name = queBox<string>("输入学生ID:", 2);
 	if (stu.isStuWordInList(stuWordNode(name))){
 		printf("此ID已经注册！\n");
+		wait();
+		cmdUi();
 	}
 	else{
 		string password = queBox<string>("输入学生密码:", 2);
 		stu.addStuWord(name, password);
 		printf("*********注册成功,登录成功！*******\n");
+		wait();
 		stuPanel(name);
 	}
 }
@@ -53,78 +63,105 @@ void UI::adminLogIn()
 	string password = queBox<string>("输入管理员密码:", 2);
 	if (admin.checkPassword(st, password)){
 			printf("*******登陆成功!*******\n");
+			wait();
 			adminPanel();
 		}
-	else printf("用户名或密码错误!\n");
+	else{ printf("用户名或密码错误!\n"); wait(); cmdUi(); }
 }
 
 void UI::cls()
 {
+	system("cls");
+}
+
+void UI::wait(){
+	char ch;
+	while (_kbhit()){ ch = _getch(); }
+	printf("\n*********任意键继续********\n");
+	while (!_kbhit()){}
+	ch = _getch();
+	cls();
 }
 
 void UI::adminPanel()
 {
-	printf("1.注销登录 2.录入课程信息 3.查看全部课程信息 4.增加课程 5.删除课程 6.修改课程 7.查看具体课程\n");
-	int tmp = queBox<int>("请选择所需的功能:", 1);
-	switch (tmp){
-	case 1: 
-		return;
-		break;
-	case 2:
-		admin_addCourseFromFile();
-		break;
-	case 3:
-		viewAllCourse();
-		break;
-	case 4:
-		admin_addCourse();
-		break;
-	case 5:
-		admin_delCourse();
-		break;
-	case 6:
-		admin_editCourse();
-		break;
-	case 7:
-		viewCourse();
-		break;
+	while (1){
+		printf("1.注销登录 2.录入课程信息 3.查看全部课程信息 4.增加课程 5.删除课程 6.修改课程 7.查看具体课程\n");
+		int tmp = queBox<int>("请选择所需的功能:", 1);
+		switch (tmp){
+		case 1:
+			dataCourse.writeToFile();
+			dataStuAll.writeToFile();
+			dataAssi.writeToFile();
+			break;
+		case 2:
+			admin_addCourseFromFile();
+			break;
+		case 3:
+			viewAllCourse();
+			break;
+		case 4:
+			admin_addCourse();
+			break;
+		case 5:
+			admin_delCourse();
+			break;
+		case 6:
+			admin_editCourse();
+			break;
+		case 7:
+			viewCourse();
+			break;
+		}
+		if (tmp == 1) break;
 	}
+	wait();
+	cmdUi();
 }
 
 void UI::stuPanel(string name)
 {
 	stu.setpath(name);
-	printf("1.注销登录 2.查看课程信息 3.选课 4.查看个人课表 5.退课 6.举手报名助教7.选择个人助教\n");
-	int tmp = queBox<int>("请选择所需的功能:", 1);
-	switch (tmp){
-	case 1:
-		return;
-		break;
-	case 2:
-		viewAllCourse();
-		break;
-	case 3:
-		stu_addCourse();
-		break;
-	case 4:
-		stu_viewAllCourse();
-		break;
-	case 5:
-		stu_delCourse();
-		break;
-	case 6:
-		stu_addAssistant();
-		break;
-	case 7:
-		stu_selAssistant();
-		break;
+	while (1){
+		stu_checkAssistError();
+		printf("1.注销登录 2.查看课程信息 3.选课 4.查看个人课表 5.退课 6.举手报名助教7.选择个人助教\n");
+		int tmp = queBox<int>("请选择所需的功能:", 1);
+		switch (tmp){
+		case 1:
+			dataStuX.writeToFile();
+			dataCourse.writeToFile();
+			dataStuAll.writeToFile();
+			dataAssi.writeToFile();
+			break;
+		case 2:
+			viewAllCourse();
+			break;
+		case 3:
+			stu_addCourse();
+			break;
+		case 4:
+			stu_viewAllCourse();
+			break;
+		case 5:
+			stu_delCourse();
+			break;
+		case 6:
+			stu_addAssistant();
+			break;
+		case 7:
+			stu_selAssistant();
+			break;
+		}
+		if (tmp == 1) break;
 	}
+	wait();
+	cmdUi();
 }
 
 void UI::viewAllCourse()
 {
 	printf("课程ID\t课程名称\t授课教师\t上限人数\t目前已选\t课程类型\n");
-	vector<CourseNode>& CourseList = admin.getCourseList();
+	vector<string>& CourseList = admin.getCourseList();
 	For(i, 0, int(CourseList.size()) - 1) printCourse(CourseList[i]);
 }
 
@@ -140,7 +177,7 @@ void UI::viewCourse()
 	else{
 		CourseNode tmp = admin.getCourse(curCourse);
 		printf("课程ID\t课程名称\t授课教师\t上限人数\t目前已选\t课程类型\n");
-		printCourse(tmp);
+		printCourse(to_string(tmp.CourseId));
 		printf("还希望进行以下哪项操作: 1.查看选课学生名单 2.查看课程报名助教名单");
 		int opt = queBox<int>("输入操作编号:", 1);
 		if (opt == 1){
@@ -155,7 +192,7 @@ void UI::viewCourse()
 
 void UI::viewStu(int courseId)
 {
-	courseStuNode& a = admin.getCourseStuList(courseId);
+	courseStuNode a = admin.getCourseStuList(courseId);
 	if (a.list.empty()) printf("此课程暂无学生选择!");
 	else{
 		printf("选择该课程的学生有:");
@@ -164,16 +201,16 @@ void UI::viewStu(int courseId)
 			cout << "," << a.list[i];
 		}
 		cout << endl;
-		CourseNode curCourse = dataCourse.getCourse(CourseNode(courseId));
+		CourseNode curCourse = admin.getCourse(CourseNode(courseId));
 		printf("共计%d名学生，距离满课还差%d人\n", curCourse.CourseSel, curCourse.CourseCap - curCourse.CourseSel);
 	}
 }
 
-void UI::printCourse(CourseNode tmp){
-	string id = str_toStringId(tmp.CourseId);
-	cout << id << "\t" << tmp.CourseName << "\t" << tmp.CourseTeacher << "\t" << tmp.CourseCap << "\t" << tmp.CourseSel << "\t";
-	if (tmp.CourseType == 0) cout << "专业课" << endl;
-	else cout << "非专业课" << endl;
+void UI::printCourse(string CourseId){
+	//cout << CourseId << endl;
+	string id = str_toStringId(atoi(CourseId));
+	cout << id << "\t" << pCourse.query(CourseId, 1)[0] << "\t" << pCourse.query(CourseId, 2)[0] << "\t" << pCourse.query(CourseId, 3)[0] << "\t" << pCourse.query(CourseId, 4)[0] << "\t";
+	cout << pCourse.query(CourseId, 5)[0] << endl;
 }
 void UI::admin_addCourse()
 {
@@ -239,6 +276,20 @@ void UI::admin_editCourse()
 	}
 }
 
+void UI::stu_checkAssistError()
+{
+	if (stu.isAssistError()){
+		vector<string> a = stu.getAssistError();
+		printf("注意！你选择的一下课程的助教退出了该课程，请重新选择助教!\n");
+		printf("课程ID:");
+		cout << a[0];
+		For(i, 1, int(a.size()) - 1){
+			cout << "," << a[i];
+		}
+		cout << endl;
+	}
+}
+
 void UI::stu_addCourse()
 {
 	int id = queBox<int>("输入课程id:", 1);
@@ -250,12 +301,18 @@ void UI::stu_addCourse()
 
 void UI::stu_viewAllCourse()
 {
-	vector<stuCourseNode>& a = stu.getStuCourseList();
+	vector<string>& a = stu.getStuCourseList();
 	printf("课程ID\t课程名称\t授课教师\t上限人数\t目前已选\t课程类型\n");
 	For(i, 0, int(a.size()) - 1){
-		int tmp = a[i].courseId;
-		CourseNode tmp1 = stu.getCourse(CourseNode(tmp));
-		printCourse(tmp1);
+		printCourse(a[i]);
+	}
+	pair<int, int> sum = stu.getProAndNonePro();
+	if (sum.first == 0 && sum.second == 0) printf("选课已经达到要求!\n");
+	else{
+		printf("根据学院要求，目前所选课程数不达标!");
+		if (sum.first != 0) printf("差%d门专业课，", sum.first);
+		if (sum.second != 0) printf("差%d门非业课，", sum.second);
+		printf("请及时选课!\n");
 	}
 }
 
@@ -270,11 +327,11 @@ void UI::stu_delCourse()
 	else printf("删除失败!该课程不在个人课表中!\n");
 }
 
-void UI::printAssist(assistNode& tmp)
+void UI::printAssist(vector<string>& list)
 {
 	printf("该课程助教有:");
-	cout << tmp.list[0];
-	For(i, 1, int(tmp.list.size()) - 1) cout << "," << tmp.list[i];
+	cout << list[0];
+	For(i, 1, int(list.size()) - 1) cout << "," << list[i];
 	cout << endl;
 }
 
@@ -285,8 +342,7 @@ bool UI::printAssist(int id){
 		return 1;
 	}
 	else{
-		assistNode& tmp1 = stu.getAssistNode(assistNode(id));
-		printAssist(tmp1);
+		printAssist(stu.getAssistNode(assistNode(id)));
 		return 0;
 	}
 }
@@ -301,7 +357,7 @@ void UI::stu_selAssistant()
 			if (printAssist(id));
 			else{
 				string st = queBox<string>("输入助教名称:", 2);
-				int tmp2 = stu.addAssistant(stu.getAssistNode(assistNode(id)), st);
+				int tmp2 = stu.addAssistant(assistNode(id), st);
 				if (tmp2 == 0){
 					printf("已选择该助教!\n");
 				}
@@ -319,7 +375,7 @@ void UI::stu_addAssistant()
 	if (tmp == 0) printf("报名成功!\n");
 	if (tmp == 1) printf("报名失败，重复报名！\n");
 	if (tmp == 2) printf("报名失败，已经有两门课程当助教!\n");
-	if (tmp == 3) printf("报名失败，无此课程!");
+	if (tmp == 3) printf("报名失败，你没有选择此门课程!");
 }
 
 template<class returnType>

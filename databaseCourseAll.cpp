@@ -1,29 +1,23 @@
 #include "databaseCourseAll.h"
+#include"ADEQ.h"
 
-
+/*
 databaseCourseAll::databaseCourseAll()
 {
 	courseStuList.clear();
 }
-
+*/
 void databaseCourseAll::init()
 {
-	vector<CourseNode>& courseIdList = dataCourse.getCourseList();
-	int n = int(courseIdList.size()) - 1;
-	For(i, 0, n) addCourseXInGraph(courseIdList[i].CourseId);
-	vector<stuWordNode>& stuNameList = dataStuAll.getStuWordList();
-	For(i, 0, int(stuNameList.size()) - 1){
-		dataStuX.setpath(stuNameList[i].stuName + ".txt");
-		vector<stuCourseNode>& stuCourseList = dataStuX.getStuCourseList();
-		For(j, 0, int(stuCourseList.size()) - 1){
-			addStuInCourseX(stuCourseList[j].courseId, stuNameList[i].stuName);
+	For(i, 0, int(pStuPass.graph.size()) - 1){
+		string stuName = pStuPass.graph[i][0][0];
+		dataStuX.setpath(stuName + ".txt");
+		For(j, 0, int(pStuCourse.graph.size()) - 1){
+			pCourse.add(pStuCourse.graph[j][0][0], 6, stuName);
 		}
 	}
-	/*For(i, 0, len() - 1){
-		if (!courseStuList[i].list.empty())
-			cout << courseStuList[i].courseId << " " << courseStuList[i].list[0] <<endl;
-	}*/
 }
+/*
 void databaseCourseAll::addStuInCourseX(int id, string name)
 {
 	int n = len();
@@ -95,4 +89,5 @@ void databaseCourseAll::delCourseXInGraph(int id)
 	int loc = findCourseXInGraph(id);
 	courseStuList.erase(courseStuList.begin() + loc);
 }
+*/
 databaseCourseAll dataCourseStu;

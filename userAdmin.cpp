@@ -1,6 +1,5 @@
 #include "userAdmin.h"
 
-
 bool userAdmin::checkPassword(string name, string password)
 {
 	return ((name == "Admin") && (password == "admin"));
@@ -19,36 +18,40 @@ int userAdmin::addStuFromFile(string path)
 
 int userAdmin::addCourse(CourseNode tmp)
 {
-	if (dataCourse.isCourseInlist(tmp)) return 1;
-	dataCourse.addCourse(tmp);
+	if (pCourse.queryHasKey(tmp.CourseName, 1)) return 1;
+	tmp.CourseId = atoi(pCourse.queryLastKey()) + 1;
+	string stId = to_string(tmp.CourseId);
+	pCourse.addKey(stId);
+	pCourse.add(stId, 1, tmp.CourseName);
+	pCourse.add(stId, 2, tmp.CourseTeacher);
+	pCourse.add(stId, 3, to_string(tmp.CourseCap));
+	pCourse.add(stId, 4, to_string(tmp.CourseSel));
+	pCourse.add(stId, 5, (tmp.CourseType == 0) ? "专业课" : "非专业课");
 	return 0;
 }
 
 int userAdmin::delCourse(int id)
 {
-	if (dataCourse.isCourseInlist(CourseNode(id))){
-		CourseNode tmp = dataCourse.getCourse(CourseNode(id));
-		if (tmp.CourseSel != 0) return 2;
-		else{
-			dataAssi.delCourseInAssistList(assistNode(id));
-			dataCourse.delCourse(CourseNode(id));
-			return 0;
-		}
-	}
-	else return 1;
+	string stId = to_string(id);
+	if (!pCourse.queryHasKey(stId)) return 1;
+	if (!pCourse.queryHas(stId, 4, "0")) return 2;
+	pCourse.delKey(stId);
+	return 0;
 }
 
 int userAdmin::editCourse(CourseNode curCourse)
 {
-	CourseNode oriCourse = dataCourse.getCourse(CourseNode(curCourse.CourseId));
+	string stId = to_string(curCourse.CourseId);
+	if (!pCourse.queryHasKey(stId)) return 1;
 	if (curCourse.CourseName != ""){
-		dataCourse.editCourse(curCourse);
+		pCourse.edit(stId, 1, curCourse.CourseName);
 		return 0;
 	}
 	else if (curCourse.CourseCap != -1){
-		if (oriCourse.CourseSel > curCourse.CourseCap) return 1;
+		int sel = atoi(pCourse.query(stId, 4)[0]);
+		if (sel > curCourse.CourseCap) return 1;
 		else{
-			dataCourse.editCourse(curCourse);
+			pCourse.edit(stId, 3, to_string(curCourse.CourseCap));
 			return 0;
 		}
 	}
@@ -57,30 +60,41 @@ int userAdmin::editCourse(CourseNode curCourse)
 
 bool userAdmin::isCourseInList(CourseNode tmp)
 {
-	return dataCourse.isCourseInlist(tmp);
+	return pCourse.queryHasKey(to_string(tmp.CourseId));
 }
 
-courseStuNode& userAdmin::getCourseStuList(int id)
+courseStuNode userAdmin::getCourseStuList(int id)
 {
-	return dataCourseStu.getListInCourseX(id);
+	return courseStuNode(id, pCourse.query(to_string(id), 6));
 }
 
-vector<CourseNode>& userAdmin::getCourseList()
+vector<string>& userAdmin::getCourseList()
 {
-#ifdef testUi
-	//dataCourse.addCourse(CourseNode("123", "123", 0, 0, "专业课"));
-#endif
-	return dataCourse.getCourseList();
+	return pCourse.queryKeyList();
 }
 
-CourseNode userAdmin::getCourse(CourseNode tmp)
+CourseNode userAdmin::getCourse(CourseNode tmp)//id or name
 {
-	return dataCourse.getCourse(tmp);
+	string stId;
+	if (tmp.CourseId != -1){
+		stId = to_string(tmp.CourseId);
+	}
+	else{
+		stId = pCourse.query(tmp.CourseName, 0, 1)[0];
+	}
+	CourseNode newCourse;
+	newCourse.CourseId = atoi(stId);
+	newCourse.CourseName = pCourse.query(stId, 1)[0];
+	newCourse.CourseTeacher = pCourse.query(stId, 2)[0];
+	newCourse.CourseCap = atoi(pCourse.query(stId, 3)[0]);
+	newCourse.CourseSel = atoi(pCourse.query(stId, 4)[0]);
+	newCourse.CourseType = (pCourse.query(stId, 5)[0] == "专业课") ? 0 : 1;
+	return newCourse;
 }
 
 assistNode userAdmin::getAssistNode(int courseId)
 {
-	if (dataAssi.isCourseInAssistList(assistNode(courseId)))
-		return dataAssi.getAssistNode(assistNode(courseId));
+	if (!pCourse.queryHas(to_string(courseId), 7, "NULL"))
+		return assistNode(courseId, pCourse.query(to_string(courseId), 7));
 	else return assistNode();
 }

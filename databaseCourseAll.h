@@ -8,10 +8,10 @@ class databaseCourseAll
 	//本表维护每个课程中所选学生的名字
 	//维护（课程， 学生）关系
 public:
-	databaseCourseAll();
-	int len();
+	//databaseCourseAll();
+	//int len();
 	void init();//初始化统计
-
+	/*
 	void addStuInCourseX(int id, string name);//在某个课程中增加学生
 	void addCourseXInGraph(int id);//增加一项课程
 
@@ -26,6 +26,7 @@ public:
 	
 	vector<courseStuNode> courseStuList;
 	courseStuNode courseStuListNode;
+	*/
 };
 
 extern databaseCourseAll dataCourseStu;
