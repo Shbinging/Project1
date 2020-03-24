@@ -41,6 +41,7 @@ vector<string>& userStu::getStuCourseList()
 
 int userStu::addCourse(CourseNode tmp)//id
 {
+	if (!pCourse.queryHasKey(to_string(tmp.CourseId))) return 3;
 	if (pStuCourse.queryHasKey(to_string(tmp.CourseId))) return 1;
 	else{
 		string stId = to_string(tmp.CourseId);
@@ -54,6 +55,7 @@ int userStu::addCourse(CourseNode tmp)//id
 		pStuCourse.add(stId, 1, "Null");
 		if (pCourse.queryHas(stId, 5, "专业课")) proSum++;
 		if (pCourse.queryHas(stId, 5, "非专业课")) nonProSum++;
+		pStuCourse.keySort();
 		return 0;
 }
 
@@ -67,7 +69,7 @@ int userStu::delCourse(CourseNode tmp)
 		int sel = atoi(pCourse.query(stId, 4)[0]);
 		sel--;
 		pCourse.edit(stId, 4, to_string(sel));
-		pCourse.del(stId, 6, userName);
+		pCourse.del(stId, 6, userName);//删除助教名单中该学生！
 		pStuCourse.delKey(stId);
 		if (pCourse.queryHas(stId, 7, userName)){
 			pCourse.del(stId, 7, userName);
@@ -75,7 +77,7 @@ int userStu::delCourse(CourseNode tmp)
 		}
 		if (pCourse.queryHas(stId, 5, "专业课")) proSum--;
 		if (pCourse.queryHas(stId, 5, "非专业课")) nonProSum--;
-		//删除助教名单中该学生！
+		pStuCourse.keySort();
 		return 0;
 	}
 }

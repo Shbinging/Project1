@@ -96,21 +96,27 @@ void UI::adminPanel()
 			break;
 		case 2:
 			admin_addCourseFromFile();
+			wait();
 			break;
 		case 3:
 			viewAllCourse();
+			wait();
 			break;
 		case 4:
 			admin_addCourse();
+			wait();
 			break;
 		case 5:
 			admin_delCourse();
+			wait();
 			break;
 		case 6:
 			admin_editCourse();
+			wait();
 			break;
 		case 7:
 			viewCourse();
+			wait();
 			break;
 		}
 		if (tmp == 1) break;
@@ -135,21 +141,27 @@ void UI::stuPanel(string name)
 			break;
 		case 2:
 			viewAllCourse();
+			wait();
 			break;
 		case 3:
 			stu_addCourse();
+			wait();
 			break;
 		case 4:
 			stu_viewAllCourse();
+			wait();
 			break;
 		case 5:
 			stu_delCourse();
+			wait();
 			break;
 		case 6:
 			stu_addAssistant();
+			wait();
 			break;
 		case 7:
 			stu_selAssistant();
+			wait();
 			break;
 		}
 		if (tmp == 1) break;
@@ -297,6 +309,7 @@ void UI::stu_addCourse()
 	if (tmp == 0) printf("已经添加到个人课表中!\n");
 	else if (tmp == 1)printf("添加失败！该课程已经在个人课表中!\n");
 	else if (tmp == 2) printf("添加失败！该课程已满!\n");
+	else if (tmp == 3) printf("添加失败！无此课程!\n");
 }
 
 void UI::stu_viewAllCourse()

@@ -1,5 +1,6 @@
 #pragma once
 #include"diag.h"
+#include"agori.h"
 class ADEQ
 {
 public:
@@ -18,7 +19,8 @@ public:
 
 	void editKey(string key, string newKey);
 	void edit(string key, int opt, string newWord, int change = 0);
-
+	void keySort();
+	 
 	bool queryHasKey(string key, int change = 0);
 	bool queryHas(string key, int opt, string word, int change = 0);//Null查询这个属性里面的元素是否存在
 	string queryLastKey();

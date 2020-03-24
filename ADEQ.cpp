@@ -67,6 +67,16 @@ void ADEQ::edit(string key, int opt, string newWord, int change)
 	graph[loc][opt][0] = newWord;
 }
 
+bool cmp(const vector<vector<string>>& a, const vector<vector<string>>& b){
+	return (atoi(a[0][0]) < atoi(b[0][0]));
+}
+
+void ADEQ::keySort()
+{
+	if (!graph.empty())
+	sort(graph.begin(), graph.end(), cmp);
+}
+
 bool ADEQ::queryHasKey(string key, int change)
 {
 	int loc = findKey(key, change);
