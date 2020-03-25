@@ -15,6 +15,7 @@ void userStu::setpath(string path)//init()
 	assistantSum = 0;
 	proSum = 0;
 	nonProSum = 0;
+	courseSum = courseList.size();
 	For(i, 0, int(courseList.size()) - 1){
 		if (pCourse.queryHas(courseList[i], 7, path)) assistantSum++;
 		if (pCourse.queryHas(courseList[i], 5, "专业课")) proSum++;
@@ -41,6 +42,7 @@ vector<string>& userStu::getStuCourseList()
 
 int userStu::addCourse(CourseNode tmp)//id
 {
+	if (courseSum + 1 > 10) return 4;
 	if (!pCourse.queryHasKey(to_string(tmp.CourseId))) return 3;
 	if (pStuCourse.queryHasKey(to_string(tmp.CourseId))) return 1;
 	else{
@@ -55,6 +57,7 @@ int userStu::addCourse(CourseNode tmp)//id
 		pStuCourse.add(stId, 1, "Null");
 		if (pCourse.queryHas(stId, 5, "专业课")) proSum++;
 		if (pCourse.queryHas(stId, 5, "非专业课")) nonProSum++;
+		courseSum++;
 		pStuCourse.keySort();
 		return 0;
 }
@@ -77,6 +80,7 @@ int userStu::delCourse(CourseNode tmp)
 		}
 		if (pCourse.queryHas(stId, 5, "专业课")) proSum--;
 		if (pCourse.queryHas(stId, 5, "非专业课")) nonProSum--;
+		courseSum--;
 		pStuCourse.keySort();
 		return 0;
 	}
@@ -102,6 +106,7 @@ int userStu::beAssistant(assistNode tmp)
 	if (assistantSum >= 2) return 2;
 	if (pCourse.queryHas(stId, 7, userName)) return 1;
 	pCourse.add(stId, 7, userName);
+	assistantSum++;
 	return 0;
 }
 
@@ -166,4 +171,12 @@ vector<string> userStu::getAssistError()
 pair<int, int> userStu::getProAndNonePro()
 {
 	return make_pair(max(0, 4 - proSum), max(0, 2 - nonProSum));
+}
+
+void userStu::close()
+{
+	dataStuX.writeToFile();
+	dataCourse.writeToFile();
+	dataStuAll.writeToFile();
+	dataAssi.writeToFile();
 }

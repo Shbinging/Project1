@@ -43,8 +43,8 @@ int userAdmin::editCourse(CourseNode curCourse)
 {
 	string stId = to_string(curCourse.CourseId);
 	if (!pCourse.queryHasKey(stId)) return 1;
-	if (curCourse.CourseName != ""){
-		pCourse.edit(stId, 1, curCourse.CourseName);
+	if (curCourse.CourseTeacher != ""){
+		pCourse.edit(stId, 2, curCourse.CourseTeacher);
 		return 0;
 	}
 	else if (curCourse.CourseCap != -1){
@@ -97,4 +97,11 @@ assistNode userAdmin::getAssistNode(int courseId)
 	if (!pCourse.queryHas(to_string(courseId), 7, "NULL"))
 		return assistNode(courseId, pCourse.query(to_string(courseId), 7));
 	else return assistNode();
+}
+
+void userAdmin::close()
+{
+	dataCourse.writeToFile();
+	dataStuAll.writeToFile();
+	dataAssi.writeToFile();
 }

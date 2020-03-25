@@ -33,7 +33,9 @@ bool str_isNum(string tmp){
 
 int atoi(string st){
 	int s = 0;
-	For(i, 0, int(st.length()) - 1)
-		s = s * 10 + st[i] - '0';
+	For(i, 0, int(st.length()) - 1){
+		if (st[i] < '0' || st[i]>'9') return -1;
+		else s = s * 10 + st[i] - '0';
+	}
 	return s;
 }

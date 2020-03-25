@@ -10,7 +10,7 @@ class userStu
 {
 public:
 	bool checkpassword(string name, string password);
-	void setpath(string path);
+	void setpath(string path);//初始化
 	bool isStuWordInList(stuWordNode tmp);
 	void addStuWord(string name, string password);
 	
@@ -30,7 +30,10 @@ public:
 	vector<string> getAssistError();//获取该学生退课的助教名单
 	pair<int, int> getProAndNonePro();//获取剩余专业课非专业课要求
 
+	void close();
 private:
-	int assistantSum, proSum, nonProSum;
+	int assistantSum, proSum, nonProSum, courseSum;
+	//当助教门数， 专业课数， 非专业课数， 课程数
+	//在初始化时查表统计，之后在学生操作过程中直接计数
 };
 

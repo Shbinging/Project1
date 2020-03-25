@@ -9,7 +9,6 @@ class userAdmin
 {
 public:
 	userAdmin(){
-		dataCourseStu.init();
 	}
 	bool checkPassword(string, string);
 	int addStuFromFile(string);
@@ -18,9 +17,10 @@ public:
 	int editCourse(CourseNode);
 	bool isCourseInList(CourseNode);
 	courseStuNode getCourseStuList(int id);
-	vector<string>& getCourseList();//这个要改！！！
+	vector<string>& getCourseList();
 	CourseNode getCourse(CourseNode);
 	assistNode getAssistNode(int courseId);
+	void close();
 //private:
 	//databaseCurrentCourse dataCourse;
 };

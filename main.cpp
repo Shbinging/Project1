@@ -9,7 +9,6 @@
 #include"userStu.h"
 int main(){
 	UI b;
-	//dataCourseStu.init();
 	dataCourse.readFromFile();
 	dataStuAll.readFromFile();
 	dataAssi.readFromFile();

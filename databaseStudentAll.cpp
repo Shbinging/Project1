@@ -43,31 +43,5 @@ bool databaseStudentAll::writeToFile(string path)
 		return 0;
 	}
 }
-/*
-vector<stuWordNode>& databaseStudentAll::getStuWordList()
-{
-	return stuWordList;
-}
 
-bool databaseStudentAll::isStuInStuWordList(stuWordNode tmp)
-{
-	For(i, 0, int(stuWordList.size()) - 1){
-		if (stuWordList[i].stuName == tmp.stuName) return 1;
-	}
-	return 0;
-}
-
-stuWordNode databaseStudentAll::getStuWord(stuWordNode tmp)
-{
-	For(i, 0, int(stuWordList.size()) - 1){
-		if (stuWordList[i].stuName == tmp.stuName) return stuWordList[i];
-	}
-}
-
-void databaseStudentAll::addStuWord(stuWordNode tmp)
-{
-	stuWordList.push_back(tmp);
-	writeToFile(pathBase);
-}
-*/
 databaseStudentAll dataStuAll;
