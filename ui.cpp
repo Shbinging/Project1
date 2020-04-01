@@ -239,7 +239,7 @@ void UI::printCoursePart(string CourseId)
 	if (assist == "Null") printf("无\t");
 	else if (assist == "Wait")
 		printf("待重选\t");
-	else cout << assist << endl;
+	else cout << assist << "\t";
 	if (pAssistMem.queryHasKey(CourseId + stu.userName)){
 		vector<string> memlist = pAssistMem.query(CourseId + stu.userName, 1);
 		if (memlist.empty()) printf("无\n");
