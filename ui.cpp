@@ -63,17 +63,21 @@ void UI::stuLogIn()
 void UI::stuReg()
 {
 	cls();
-	string name = queBoxStr("输入学生ID:");
-	if (stu.isStuWordInList(stuWordNode(name))){
-		printf("此ID已经注册！\n");
-		wait();
-	}
-	else{
-		string password = queBoxStr("输入学生密码:");
-		stu.addStuWord(name, password);
-		printf("*********注册成功,登录成功！*******\n");
-		wait();
-		stuPanel(name);
+	while (1){
+		printf("学生注册:\n");
+		string name = queBoxStr("输入学生ID:");
+		if (stu.isStuWordInList(stuWordNode(name))){
+			printf("此ID已经注册！\n");
+			wait();
+		}
+		else{
+			string password = queBoxStr("输入学生密码:");
+			stu.addStuWord(name, password);
+			printf("*********注册成功,登录成功！*******\n");
+			wait();
+			stuPanel(name);
+			break;
+		}
 	}
 }
 
