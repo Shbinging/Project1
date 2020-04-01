@@ -4,7 +4,7 @@
 #include<conio.h>
 void UI::cmdUi(){
 	cls();
-	printf("友情提示：一定要用功能退出程序，不能直接关闭窗口！\n");
+	//printf("友情提示：一定要用功能退出程序，不能直接关闭窗口！\n");
 	while (1){
 		printf("1.学生登录	2.学生注册	3.管理员登录		4.关闭\n");
 		int opt = queBoxInt("输入操作:");
@@ -32,7 +32,10 @@ void UI::stuLogIn()
 {
 	cls();
 	string name = queBoxStr("输入学生ID:");
-	string password = queBoxStr("输入学生密码:");
+	Password pass;
+	pass.inputPassword("输入学生密码:");
+	string password = pass.getPassword();
+	cout << endl;
 	if (stu.checkpassword(name, password)){
 		printf("*******登陆成功!*******\n");
 		wait();
@@ -64,8 +67,11 @@ void UI::stuReg()
 void UI::adminLogIn()
 {
 	cls();
-	string st = queBoxStr("输入管理员ID:");
-	string password = queBoxStr("输入管理员密码:");
+	string st = queBoxStr("输入管理员ID:", 1);
+	Password pass;
+	pass.inputPassword("输入管理员密码:");
+	string password = pass.getPassword();
+	cout << endl;
 	if (admin.checkPassword(st, password)){
 			printf("*******登陆成功!*******\n");
 			wait();
@@ -230,14 +236,26 @@ void UI::printCoursePart(string CourseId)
 	string id = str_toStringId(atoi(CourseId));
 	cout << id << "\t" << pCourse.query(CourseId, 1)[0] << "\t" << pCourse.query(CourseId, 2)[0] << "\t" << pCourse.query(CourseId, 5)[0]<<"\t";
 	string assist = pStuCourse.query(CourseId, 1)[0];
-	if (assist == "Null") printf("无\n");
+	if (assist == "Null") printf("无\t");
 	else if (assist == "Wait")
-		printf("待重选\n");
+		printf("待重选\t");
 	else cout << assist << endl;
+	if (pAssistMem.queryHasKey(CourseId + stu.userName)){
+		vector<string> memlist = pAssistMem.query(CourseId + stu.userName, 1);
+		if (memlist.empty()) printf("无\n");
+		else{
+			cout << memlist[0];
+			For(i, 1, int(memlist.size()) - 1) cout << "," << memlist[i];
+			cout << endl;
+		}
+	}
+	else printf("无\n");
+
 }
 
 void UI::admin_addCourse()
 {
+
 	string st = queBoxStr("输入课程具体信息:");
 	vector<string> a = str_Split(st, ',');
 	CourseNode tmp = CourseNode(a[0], a[1], stoi(a[2]), stoi(a[3]), a[4]);
@@ -316,23 +334,29 @@ void UI::stu_checkAssistError()
 
 void UI::stu_addCourse()
 {
-	int id = queBoxInt("输入课程id:");
-	int tmp = stu.addCourse(CourseNode(id));
-	if (tmp == 0) printf("已经添加到个人课表中!\n");
-	else if (tmp == 1)printf("添加失败！该课程已经在个人课表中!\n");
-	else if (tmp == 2) printf("添加失败！该课程已满!\n");
-	else if (tmp == 3) printf("添加失败！无此课程!\n");
-	else if (tmp == 4) printf("添加失败！选课已经达到最大值10门\n");
+	vector<string> id = queBoxStrList("输入选择课程的id（可以多选，空格隔开）:");
+	For(i, 0, int(id.size()) - 1){
+		cout << "课程" << str_toStringId(atoi(id[i]))<<" ";
+		int tmp = stu.addCourse(CourseNode(atoi(id[i])));
+		if (tmp == 0) printf("已经添加到个人课表中!\n");
+		else if (tmp == 1)printf("添加失败！该课程已经在个人课表中!\n");
+		else if (tmp == 2) printf("添加失败！该课程已满!\n");
+		else if (tmp == 3) printf("添加失败！无此课程!\n");
+		else if (tmp == 4) printf("添加失败！选课已经达到最大值10门\n");
+	}
+	stu_viewAllCourse();
 }
 
 void UI::stu_viewAllCourse()
 {
+	printf("************************************\n");
 	vector<string>& a = stu.getStuCourseList();
-	printf("课程ID\t课程名称\t授课教师\t课程类型\t个人助教\n");
+	printf("课程ID\t课程名称\t授课教师\t课程类型\t个人助教\t自己担任助教的小组成员\n");
 	For(i, 0, int(a.size()) - 1){
 		printCoursePart(a[i]);
 	}
 	pair<int, int> sum = stu.getProAndNonePro();
+	printf("************************************\n");
 	if (sum.first == 0 && sum.second == 0) printf("选课已经达到要求!\n");
 	else{
 		printf("根据学院要求，目前所选课程数不达标!");
@@ -344,13 +368,16 @@ void UI::stu_viewAllCourse()
 
 void UI::stu_delCourse()
 {
-	int id = queBoxInt("输入课程id:");
-	int tmp = stu.delCourse(CourseNode(id));
-	if (tmp == 0){
-		printf("删除成功!\n");
-		stu_viewAllCourse();
+	vector<string> id = queBoxStrList("输入课程id（可以多选，空格隔开）:");
+	For(i, 0, int(id.size()) - 1){
+		cout << "课程" << str_toStringId(atoi(id[i])) << " ";
+		int tmp = stu.delCourse(CourseNode(atoi(id[i])));
+		if (tmp == 0){
+			printf("删除成功!\n");
+		}
+		else printf("删除失败!该课程不在个人课表中!\n");
 	}
-	else printf("删除失败!该课程不在个人课表中!\n");
+	stu_viewAllCourse();
 }
 
 void UI::printAssist(vector<string>& list)
@@ -404,23 +431,48 @@ void UI::stu_addAssistant()
 	if (tmp == 3) printf("报名失败，你没有选择此门课程!");
 }
 
-string UI::queBoxStr(string st)
+string UI::queBoxStr(string st, int opt)
 {
 	cout << st;
 	string tmp;
-	cin >> tmp;
+	getline(cin, tmp);
+	while (tmp.find(' ', 0) != -1 && (!opt)){
+		printf("输入非法!\n");
+		cout << st;
+		getline(cin, tmp);
+	}
 	return tmp;
+}
+
+vector<string> UI::queBoxStrList(string st, char ch)
+{
+	bool f = 0;
+	while (!f){
+		cout << st;
+		string tmp;
+		getline(cin, tmp);
+		vector<string> a = str_Split(tmp, ch);
+		For(i, 0, int(a.size()) - 1){
+			if (!str_isNum(a[i])){
+				f = 1; 
+				break;
+			}
+		}
+		if (f) cout << "输入非法！" << endl;
+		else return a;
+		f = !f;
+	}
 }
 
 int UI::queBoxInt(string st)
 {
 	cout << st;
 	string tmp;
-	cin >> tmp;
+	getline(cin, tmp);
 	while(atoi(tmp) == -1){
 		printf("输入非法!\n");
 		cout << st;
-		cin >> tmp;
+		getline(cin, tmp);
 	}
 	return atoi(tmp);
 }

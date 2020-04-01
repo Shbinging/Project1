@@ -33,6 +33,9 @@ void userStu::addStuWord(string name, string password)
 {
 	pStuPass.addKey(name);
 	pStuPass.add(name, 1, password);
+	dataCourse.writeToFile();
+	dataStuAll.writeToFile();
+	dataAssi.writeToFile();
 }
 
 vector<string>& userStu::getStuCourseList()
@@ -59,6 +62,7 @@ int userStu::addCourse(CourseNode tmp)//id
 		if (pCourse.queryHas(stId, 5, "非专业课")) nonProSum++;
 		courseSum++;
 		pStuCourse.keySort();
+		close();
 		return 0;
 }
 
@@ -73,6 +77,9 @@ int userStu::delCourse(CourseNode tmp)
 		sel--;
 		pCourse.edit(stId, 4, to_string(sel));
 		pCourse.del(stId, 6, userName);//删除助教名单中该学生！
+		if (pAssistMem.queryHasKey(stId + userName)){
+			pAssistMem.delKey(stId + userName);
+		}//删除该门课下该助教的所有学生
 		pStuCourse.delKey(stId);
 		if (pCourse.queryHas(stId, 7, userName)){
 			pCourse.del(stId, 7, userName);
@@ -82,6 +89,7 @@ int userStu::delCourse(CourseNode tmp)
 		if (pCourse.queryHas(stId, 5, "非专业课")) nonProSum--;
 		courseSum--;
 		pStuCourse.keySort();
+		close();
 		return 0;
 	}
 }
@@ -106,7 +114,9 @@ int userStu::beAssistant(assistNode tmp)
 	if (assistantSum >= 2) return 2;
 	if (pCourse.queryHas(stId, 7, userName)) return 1;
 	pCourse.add(stId, 7, userName);
+	pAssistMem.addKey(stId + userName);
 	assistantSum++;
+	close();
 	return 0;
 }
 
@@ -116,6 +126,8 @@ int userStu::addAssistant(assistNode tmp, string st)
 	if (st == userName) return 2;
 	if (!pCourse.queryHas(stId, 7, st)) return 1;
 	pStuCourse.edit(stId, 1, st);
+	pAssistMem.add(stId + st, 1, userName);
+	close();
 	return 0;
 }
 

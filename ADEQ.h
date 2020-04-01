@@ -34,5 +34,4 @@ private:
 extern ADEQ pCourse;
 extern ADEQ pStuCourse;
 extern ADEQ pStuPass;
-
-extern enum  {StuName, Password} lStuPass;
+extern ADEQ pAssistMem;

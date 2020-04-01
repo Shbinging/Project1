@@ -27,6 +27,7 @@ int userAdmin::addCourse(CourseNode tmp)
 	pCourse.add(stId, 3, to_string(tmp.CourseCap));
 	pCourse.add(stId, 4, to_string(tmp.CourseSel));
 	pCourse.add(stId, 5, (tmp.CourseType == 0) ? "专业课" : "非专业课");
+	close();
 	return 0;
 }
 
@@ -36,6 +37,7 @@ int userAdmin::delCourse(int id)
 	if (!pCourse.queryHasKey(stId)) return 1;
 	if (!pCourse.queryHas(stId, 4, "0")) return 2;
 	pCourse.delKey(stId);
+	close();
 	return 0;
 }
 
@@ -45,6 +47,7 @@ int userAdmin::editCourse(CourseNode curCourse)
 	if (!pCourse.queryHasKey(stId)) return 1;
 	if (curCourse.CourseTeacher != ""){
 		pCourse.edit(stId, 2, curCourse.CourseTeacher);
+		close();
 		return 0;
 	}
 	else if (curCourse.CourseCap != -1){
@@ -52,6 +55,7 @@ int userAdmin::editCourse(CourseNode curCourse)
 		if (sel > curCourse.CourseCap) return 1;
 		else{
 			pCourse.edit(stId, 3, to_string(curCourse.CourseCap));
+			close();
 			return 0;
 		}
 	}

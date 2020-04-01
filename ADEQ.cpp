@@ -116,3 +116,4 @@ vector<string>& ADEQ::queryKeyList()
 ADEQ pCourse(8);
 ADEQ pStuCourse(2);
 ADEQ pStuPass(2);
+ADEQ pAssistMem(2);

@@ -15,6 +15,10 @@ int databaseAssistant::readFromFile(string path)
 			vector<string> a = str_Split(st, ',');
 			string stId = to_string(id);
 			if (pCourse.graph[pCourse.findKey(stId)][7].empty()) pCourse.add(stId, 7, a);
+			For(i, 0, int(a.size()) - 1){
+				string key = stId + a[i];
+				if (!pAssistMem.queryHasKey(key)) pAssistMem.addKey(key);
+			}
 			fin >> id >> st;
 		}
 		fin.close();

@@ -19,7 +19,7 @@ public:
 	int delCourse(CourseNode);
 	int beAssistant(assistNode);//要求自己当助教
 	int addAssistant(assistNode tmp, string st);//申请别人当自己的助教
-
+	
 	bool isCourseAssistExsist(assistNode);
 	int isCourseAssistHaveChosen(assistNode);
 	vector<string>& getAssistNode(assistNode);
