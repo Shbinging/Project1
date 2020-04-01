@@ -13,6 +13,6 @@ int main(){
 	dataStuAll.readFromFile();
 	dataAssi.readFromFile();
 	dataCourseStu.init();
-	b.cmdUi();
+	b.begin();
 	return 0;
 }

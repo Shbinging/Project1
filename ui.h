@@ -7,6 +7,7 @@ class UI
 public:
 	void cls();
 	void wait();
+	void begin();
 	//面板类
 	void cmdUi();//开始界面
 	void stuLogIn();//学生登录界面
@@ -26,15 +27,18 @@ public:
 	void stu_checkAssistError();//判断个人助教是否异常
 	void stu_addCourse();//3选课
 	void stu_viewAllCourse();//4查看个人课表
+	void stu_viewNotChooseCourse();
+	void stu_viewAssistantCourse();
 	void stu_delCourse();//5退课
 	void stu_addAssistant();//6举手报名助教
-	
-
 	void stu_selAssistant();//7选择助教
 
 	//部件：公共
 	bool printAssist(int id);
-	void printAssist(vector<string>&);//打印助教
+	void printAssist(vector<string>&);
+	void print(string st, int n1 = 30);
+	void printLine();
+	//打印助教
 	void printCourse(string);//完整版课表打印
 	void printCoursePart(string);//部分课表打印
 	int queBoxInt(string st);
@@ -67,7 +71,7 @@ public:
 				case 8:
 					if (length != 0)
 					{
-						cout << "/b /b";
+						cout << "\b"<<" " <<"\b";
 						psw = psw.substr(0, length - 1);
 						length--;
 					}
